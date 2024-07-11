@@ -3,10 +3,6 @@ name: Python Application CI/CD
 on:
   push:
     branches: [ master ]
-
-env:
-  DEV_IP: ${{ secrets.DEV_IP }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +13,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Specify the Python version you need
+        python-version: '3.11'
 
     - name: Install Dependencies
       run: |
@@ -27,23 +23,10 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh/
-        echo "$DEV_KEY" > ~/.ssh/deploy_key
+        echo "${{ secrets.DEV_KEY }}" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
-        ssh-keyscan "$DEV_IP" >> ~/.ssh/known_hosts
-      shell: bash
-      env:
-        DEV_KEY: ${{ secrets.DEV_KEY }}
-        DEV_IP: ${{ secrets.DEV_IP }}
+        
+      shell: bash  
 
     - name: Test Connection
-      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"$DEV_IP" "echo 'SSH connection established'"
-
-    - name: Deploy Application
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"$DEV_IP" << 'EOF'
-        cd /home/madhav5mar2001/dummy_app
-        source venv/bin/activate  # Activate virtual environment if you have one
-        pip install -r requirements.txt
-        # Restart the Gunicorn service to apply the new changes
-        sudo systemctl restart gunicorn
-        EOF
+      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "git pull; cd gunicorn-python-CD; python3 -m venv venv; source venv/bin/activate; pip install -r requirements.txt; sudo systemctl daemon-reload systemctl; sudo systemctl restart gunicorn"
