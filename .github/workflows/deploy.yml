@@ -17,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Specify the Python version you need
+        python-version: '3.11'
 
     - name: Install Dependencies
       run: |
@@ -27,9 +27,9 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh/
-        echo "$DEV_KEY" > ~/.ssh/deploy_key
+        echo "${{ secrets.DEV_KEY }}" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
-        ssh-keyscan "$DEV_IP" >> ~/.ssh/known_hosts
+        ssh-keyscan "${{ secrets.DEV_IP }}" >> ~/.ssh/known_hosts
       shell: bash
       env:
         DEV_KEY: ${{ secrets.DEV_KEY }}
