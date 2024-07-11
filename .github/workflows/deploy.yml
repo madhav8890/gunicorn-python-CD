@@ -19,6 +19,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        echo ${{ secrets.DEV_KEY }}
+      env:
+        DEV_KEY: ${{ secrets.DEV_KEY }}
+        DEV_IP: ${{ secrets.DEV_IP }}
 
     - name: Setup SSH
       run: |
@@ -27,11 +31,7 @@ jobs:
         echo  ${{ secrets.DEV_IP }}
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan ${{ secrets.DEV_IP }} >> ~/.ssh/known_hosts
-      shell: bash
-      env:
-        DEV_KEY: ${{ secrets.DEV_KEY }}
-        DEV_IP: ${{ secrets.DEV_IP }}
-        
+      shell: bash  
 
     - name: Test Connection
       run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"$DEV_IP" "echo 'SSH connection established'"
