@@ -29,5 +29,5 @@ jobs:
       shell: bash  
 
     - name: Test Connection
-      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "cd gunicorn-python-CD; git pull; python3 -m venv venv; pkill gunicorn; source venv/bin/activate; pip install -r requirements.txt; sudo systemctl daemon-reload systemctl; sudo systemctl restart gunicorn"
+      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "cd /home/hp/gunicorn-python-CD; python3 -m venv venv; source venv/bin/activate; git pull; pip install -r requirements.txt; pkill gunicorn;  sudo systemctl daemon-reload systemctl; sudo systemctl restart gunicorn"
 
