@@ -29,4 +29,4 @@ jobs:
       shell: bash  
 
     - name: Test Connection
-      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "git clone https://github.com/madhav8890/gunicorn-python-CD.git; cd gunicorn-python-CD; python3 -m venv venv; source venv/bin/activate; pip install -r requirements.txt; gunicorn --workers 3 wsgi:app"
+      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "git pull; cd gunicorn-python-CD; python3 -m venv venv; source venv/bin/activate; pip install -r requirements.txt; gunicorn --workers 3 wsgi:app"
