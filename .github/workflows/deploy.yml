@@ -33,7 +33,8 @@ jobs:
 
     - name: Deploy Application
       run: |
-            - name: Clone Repository
+    - name: Clone Repository
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"${{ secrets.DEV_IP }}" "cd ~ && git clone https://github.com/madhav8890/gunicorn-python-CD.git || (cd gunicorn-python-CD && git pull)"
+        cd ~
+        mkdir test
       shell: bash
