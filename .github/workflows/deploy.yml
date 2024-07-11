@@ -37,3 +37,4 @@ jobs:
         cd ~
         git clone https://github.com/madhav8890/gunicorn-python-CD.git
         EOF
+      shell: bash
