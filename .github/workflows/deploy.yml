@@ -28,13 +28,12 @@ jobs:
       run: |
         mkdir -p ~/.ssh/
         echo ${{ secrets.DEV_KEY }} > ~/.ssh/deploy_key
-        echo  ${{ secrets.DEV_IP }}
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan ${{ secrets.DEV_IP }} >> ~/.ssh/known_hosts
       shell: bash  
 
     - name: Test Connection
-      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"$DEV_IP" "echo 'SSH connection established'"
+      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"$DEV_IP" "echo 'SSH connection established'"
 
     - name: Deploy Application
       run: |
