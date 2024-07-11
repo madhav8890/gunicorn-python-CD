@@ -31,11 +31,14 @@ jobs:
     - name: Test Connection
       run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "echo 'SSH connection established'"
 
-    - name: Deploy Application
-      run: |
-    - name: Clone Repository
-      run: |
-        cd ~
-        mkdir test
-        ls
-      shell: bash
+    - name: Run SSH commands
+      uses: appleboy/ssh-action@v0.1.9
+      with:
+        host: ${{ secrets.DEV_IP }}
+        username: hp
+        key: ~/.ssh/deploy_key
+        script: |
+          mkdir test
+          cd test
+          touch file1.txt
+          echo 'Hello, World!' > file1.txt
