@@ -35,6 +35,13 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"${{ secrets.DEV_IP }}" << 'EOF'
         cd ~
-        git clone https://github.com/madhav8890/gunicorn-python-CD.git
+        if [ -d "gunicorn-python-CD" ]; then
+          cd gunicorn-python-CD
+          git pull
+        else
+          git clone https://github.com/madhav8890/gunicorn-python-CD.git
+          cd gunicorn-python-CD
+        fi
+        # Your additional commands here, e.g., starting the server or building the project
         EOF
       shell: bash
