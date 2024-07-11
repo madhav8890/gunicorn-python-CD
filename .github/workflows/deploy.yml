@@ -28,20 +28,12 @@ jobs:
         
       shell: bash  
 
-    # - name: Test Connection
-    #   run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "echo 'SSH connection established'"
+    - name: Test Connection
+      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "echo 'SSH connection established'"
 
     - name: Deploy Application
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"${{ secrets.DEV_IP }}" << 'EOF'
-        cd ~
-        if [ -d "gunicorn-python-CD" ]; then
-          cd gunicorn-python-CD
-          git pull
-        else
-          git clone https://github.com/madhav8890/gunicorn-python-CD.git
-          cd gunicorn-python-CD
-        fi
-        # Your additional commands here, e.g., starting the server or building the project
-        EOF
+            - name: Clone Repository
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key root@"${{ secrets.DEV_IP }}" "cd ~ && git clone https://github.com/madhav8890/gunicorn-python-CD.git || (cd gunicorn-python-CD && git pull)"
       shell: bash
