@@ -28,8 +28,8 @@ jobs:
         
       shell: bash  
 
-    - name: Test Connection
-      run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "echo 'SSH connection established'"
+    # - name: Test Connection
+    #   run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key hp@"${{ secrets.DEV_IP }}" "echo 'SSH connection established'"
 
     - name: Deploy Application
       run: |
