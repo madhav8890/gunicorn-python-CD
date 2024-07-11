@@ -23,9 +23,9 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh/
-        echo ${{ secrets.DEV_KEY }} > ~/.ssh/deploy_key
+        echo "${{ secrets.DEV_KEY }}" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
-        ssh-keyscan ${{ secrets.DEV_IP }} >> ~/.ssh/known_hosts
+        
       shell: bash  
 
     - name: Test Connection
